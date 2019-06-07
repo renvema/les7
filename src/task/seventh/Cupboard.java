@@ -1,36 +1,31 @@
 package task.seventh;
 
+import java.util.ArrayList;
+
 public class Cupboard<K, V> {
-    private K key;
-    private V value;
+    private ArrayList<K> keys = new ArrayList<>();
+    private ArrayList<V> values = new ArrayList<>();
 
-    public Cupboard(K key, V value) {
-        this.key = key;
-        this.value = value;
+    public void put(K key, V value) {
+        keys.add(key);
+        values.add(value);
     }
 
-    public K getKey() {
-        return key;
+    public V get(K key) {
+        for (K Key : keys) {
+            if (Key.equals(key)) {
+                int index = keys.indexOf(Key);
+                return values.get(index);
+            }
+        }
+        return null;
     }
-
-    public void setKey(K key) {
-        this.key = key;
-    }
-
-    public V getValue() {
-        return value;
-    }
-
-    public void setValue(V value) {
-        this.value = value;
-    }
-
 
     @Override
     public String toString() {
         return "Cupboard{" +
-                "key=" + key +
-                ", value=" + value +
+                "keys=" + keys +
+                ", values=" + values +
                 '}';
     }
 }
