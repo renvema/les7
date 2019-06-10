@@ -1,53 +1,29 @@
 package task.eighth;
 
 import java.util.Arrays;
-import java.util.Iterator;
-import java.util.Objects;
 
-public class ArrayApp<T> implements ArrayList<T> {
-    public static void main(String[] args) {
-        ArrayList<String> food = new ArrayApp<>();
-        food.add("lasagna");
-        food.add("tiramisu");
-        food.add("pasta");
-        food.add("frittura mista");
-        food.add("ice cream");
-        food.add("chicheti");
-        food.add("pizza", 0);
-        food.get(1);
-        food.remove(4);
-
-        ArrayList<String> drink = new ArrayApp<>();
-        drink.add("wine");
-        drink.add("prosecco");
-        drink.add("aperol");
-        food.addAll(drink);
-        for (int i = 0; i < food.size(); i++) {
-            System.out.println((i + 1) + " - " + food.get(i));
-        }
-
-        System.out.println("Size is - " + food.size());
-        System.out.println("Remove value is " + food.remove("wine"));
-        System.out.println(food.isEmpty());
-
-    }
+public class ArrayApp<T> implements List<T> {
 
     private T[] values;
+    private final int CAPASITY = 10;
+    private int size;
 
     public ArrayApp() {
-        values = (T[]) new Object[0];
+        values = (T[]) new Object[CAPASITY];
     }
 
     @Override
     public void add(T value) {
-        try {
-            T[] temp = values;
-            values = (T[]) new Object[temp.length + 1];
-            System.arraycopy(temp, 0, values, 0, temp.length);
-            values[values.length - 1] = value;
-        } catch (ClassCastException ex) {
-            ex.printStackTrace();
-        }
+        Object app =new Object();
+     if (size>=CAPASITY){
+         grow();
+     }
+     values[size]= (T) app;
+//        T[] temp = values;
+//        values = (T[]) new Object[temp.length + 1];
+//        System.arraycopy(temp, 0, values, 0, temp.length);
+//        values[values.length - 1] = value;
+
     }
 
     @Override
@@ -55,17 +31,33 @@ public class ArrayApp<T> implements ArrayList<T> {
         values[index] = value;
 
     }
-
     @Override
-    public void addAll(ArrayList<T> list) {
-        T[] temp = values;
-        values = (T[]) new Object[temp.length + list.size()];
-        System.arraycopy(temp, 0, values, 0, temp.length);
+   public void addAll(List<T> list) {
         for (int i = 0; i < list.size(); i++) {
-            values[temp.length + i] = list.get(i);
+            add(list.get(i));
         }
-        // System.arraycopy(list,0,values,list.size(),list.size()); --- don't work. I don't understand why. I try list.toArray
     }
+
+//    @Override
+//    public void addAll(List<T> list) {
+//        T[] temp = values;
+//        values = (T[]) new Object[temp.length + list.size()];
+//        System.arraycopy(temp, 0, values, 0, temp.length);
+//        for (int i = 0; i < list.size(); i++) {
+//            values[temp.length + i] = list.get(i);
+//        }
+//    }
+
+    private void grow(){
+        values=Arrays.copyOf(values,values.length*3/2);
+    }
+//public T[] checkSize(){
+//        if (size>=CAPASITY) {
+//            values=(T[]) new Object [CAPASITY*3/2];
+//        return T[] values;
+//        }
+//        return null;
+//}
 
     @Override
     public T get(int index) {
@@ -111,11 +103,6 @@ public class ArrayApp<T> implements ArrayList<T> {
     @Override
     public boolean isEmpty() {
         return values.length == 0;
-    }
-
-    @Override
-    public Iterator<T> iterator() {
-        return new ArrayIterator<>(values);
     }
 
     @Override

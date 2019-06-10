@@ -2,7 +2,7 @@ package task.seventh;
 
 import java.util.Objects;
 
-class Pair <T, L>{
+class Pair<T, L> {
     private T first;
     private L second;
 
@@ -31,7 +31,7 @@ class Pair <T, L>{
         System.out.println(mustBeTrue);
     }
 
-    public static <T, K> Pair<T, K> of(T first, K second) {
+    public static <T, K> Pair of(T first, K second) {
         return new Pair<>(first, second);
     }
 
