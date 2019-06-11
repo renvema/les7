@@ -2,19 +2,19 @@ package task.eighth;
 
 import java.util.Arrays;
 
-public class ArrayApp<T> implements List<T> {
+public class ArrayList<T> implements List<T> {
 
     private T[] values;
     private final int CAPASITY = 10;
-    private int size;
+    private int size = 0;
 
-    public ArrayApp() {
+    public ArrayList() {
         values = (T[]) new Object[CAPASITY];
     }
 
     @Override
     public void add(T value) {
-        if (size >= CAPASITY) {
+        if (size >= values.length) {
             grow();
         }
         values[size] = value;
@@ -23,8 +23,14 @@ public class ArrayApp<T> implements List<T> {
 
     @Override
     public void add(T value, int index) {
+        checkSize(index);
+        if (size >= values.length) {
+            grow();
+        }
+        System.arraycopy(values, 0, values, 0, index - 1);
+        System.arraycopy(values, index, values, index + 1, size - index);
         values[index] = value;
-
+        size++;
     }
 
     private void grow() {
@@ -33,31 +39,30 @@ public class ArrayApp<T> implements List<T> {
 
     @Override
     public void addAll(List<T> list) {
+        checkSize(size);
         if (!list.isEmpty()) {
             for (int i = 0; i < list.size(); i++) {
                 add(list.get(i));
             }
+            size++;
         }
     }
 
     @Override
     public T get(int index) {
-        if(index> size || index < 0){
-            throw new IndexOutOfBoundsException();
-        }
-            return values[index];
+        checkSize(index);
+        return values[index];
     }
 
     @Override
     public void set(T value, int index) {
-        if(index> size || index < 0){
-            throw new IndexOutOfBoundsException();
-        }
+        checkSize(index);
         values[index] = value;
     }
 
     @Override
     public T remove(int index) {
+        checkSize(index);
         size--;
         System.arraycopy(values, index + 1, values, index, size - index);
         return values[index];
@@ -70,22 +75,29 @@ public class ArrayApp<T> implements List<T> {
                 return remove(i);
             }
         }
+
         return null;
     }
 
     @Override
     public int size() {
-        return values.length;
+        return size;
     }
 
     @Override
     public boolean isEmpty() {
-        return values.length == 0;
+        return size == 0;
+    }
+
+    public void checkSize(int index) {
+        if ((index > size) || (index < 0)) {
+            throw new IllegalArgumentException();
+        }
     }
 
     @Override
     public String toString() {
-        return "ArrayApp{" +
+        return "ArrayList{" +
                 "values=" + Arrays.toString(values) +
                 '}';
     }
