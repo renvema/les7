@@ -9,15 +9,14 @@ public class App {
         food.add("frittura mista");
         food.add("ice cream");
         food.add("chicheti");
-
         food.add("pizza", 3);
-        food.remove(6);
+
         List<String> drink = new ArrayList<>();
         drink.add("wine");
         drink.add("prosecco");
         drink.add("aperol");
         food.addAll(drink);
-
+        food.remove(6);
         for (int i = 0; i < food.size(); i++) {
             System.out.println((i + 1) + " - " + food.get(i));
         }
