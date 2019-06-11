@@ -42,11 +42,17 @@ public class ArrayApp<T> implements List<T> {
 
     @Override
     public T get(int index) {
-        return values[index];
+        if(index> size || index < 0){
+            throw new IndexOutOfBoundsException();
+        }
+            return values[index];
     }
 
     @Override
     public void set(T value, int index) {
+        if(index> size || index < 0){
+            throw new IndexOutOfBoundsException();
+        }
         values[index] = value;
     }
 
