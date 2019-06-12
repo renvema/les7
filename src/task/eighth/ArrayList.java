@@ -5,7 +5,7 @@ import java.util.Arrays;
 public class ArrayList<T> implements List<T> {
 
     private T[] values;
-    private final int CAPASITY = 10;
+    private final static int CAPASITY = 10;
     private int size = 0;
 
     public ArrayList() {
@@ -39,7 +39,6 @@ public class ArrayList<T> implements List<T> {
 
     @Override
     public void addAll(List<T> list) {
-        checkSize(size);
         if (!list.isEmpty()) {
             for (int i = 0; i < list.size(); i++) {
                 add(list.get(i));
@@ -64,7 +63,7 @@ public class ArrayList<T> implements List<T> {
         checkSize(index);
         size--;
         System.arraycopy(values, index + 1, values, index, size - index);
-        return values[index];
+        return null;
     }
 
     @Override
@@ -74,7 +73,6 @@ public class ArrayList<T> implements List<T> {
                 return remove(i);
             }
         }
-        size--;
         return null;
     }
 
