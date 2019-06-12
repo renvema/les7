@@ -17,6 +17,7 @@ public class App {
         drink.add("aperol");
         food.addAll(drink);
         food.remove(6);
+        food.remove("wine");
         for (int i = 0; i < food.size(); i++) {
             System.out.println((i + 1) + " - " + food.get(i));
         }

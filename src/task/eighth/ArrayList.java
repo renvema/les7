@@ -74,7 +74,7 @@ public class ArrayList<T> implements List<T> {
                 return remove(i);
             }
         }
-
+        size--;
         return null;
     }
 
